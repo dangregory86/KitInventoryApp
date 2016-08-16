@@ -1,7 +1,7 @@
 package com.wonkydan.kitinventoryapp;
 
 /**
- * Created by danth on 10/08/2016.
+ * Created by Dan Gregory on 10/08/2016.
  */
 public class Product {
 
