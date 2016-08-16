@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wonkydan.kitinventoryapp.DetailActivity"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/test"
+        android:id="@+id/detail_item_picture"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="@string/detail_name"
+        android:id="@+id/detail_name"
+        android:gravity="center"
+        android:textSize="24sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="@string/detail_size"
+        android:id="@+id/detail_size"
+        android:gravity="center"
+        android:textSize="24sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="@string/detail_qty"
+        android:id="@+id/detail_quantity"
+        android:gravity="center"
+        android:textSize="24sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="@string/detail_price"
+        android:id="@+id/detail_price"
+        android:gravity="center"
+        android:textSize="24sp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/minus_button"
+            android:id="@+id/minusButton"
+            android:textSize="24sp"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/quantity_edit"
+            android:textAlignment="gravity"
+            android:gravity="center"
+            android:id="@+id/quantitySelected"
+            android:textSize="24sp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/plus_button"
+            android:id="@+id/plusButton"
+            android:textSize="24sp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:padding="2dp"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/sell_button"
+            android:id="@+id/sellButton"
+            android:textSize="24sp"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/delete_all_button"
+            android:id="@+id/deleteAllButton"
+            android:textSize="24sp"
+            />
+</LinearLayout>
+
+    </LinearLayout>

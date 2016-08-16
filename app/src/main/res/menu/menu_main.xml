@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.wonkydan.kitinventoryapp.MainActivity">
+    <item
+        android:id="@+id/action_main_page"
+        android:orderInCategory="100"
+        android:title="@string/action_main_page"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_add_stock"
+        android:orderInCategory="100"
+        android:title="@string/add_stock_button"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_view_stock"
+        android:orderInCategory="100"
+        android:title="@string/view_stock_button"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_amend_stock"
+        android:orderInCategory="100"
+        android:title="@string/amend_stock_button"
+        app:showAsAction="never" />
+</menu>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.wonkydan.kitinventoryapp.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:gravity="center"
+        android:text="@string/main_page_title"
+        android:textAlignment="gravity"
+        android:textAllCaps="true"
+        android:textColor="@color/page_title"
+        android:textSize="32sp" />
+
+    <Button
+        android:id="@+id/add_stock_main"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_margin="12dp"
+        android:text="@string/add_stock_button" />
+
+    <Button
+        android:id="@+id/view_stock_main"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_margin="12dp"
+        android:text="@string/view_stock_button" />
+
+    <Button
+        android:id="@+id/amend_stock_main"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_margin="12dp"
+        android:text="@string/amend_stock_button" />
+
+</LinearLayout>

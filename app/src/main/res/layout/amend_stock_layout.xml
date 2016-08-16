@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wonkydan.kitinventoryapp.AmendStockActivity"
+    android:background="@color/list_item_background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:background="@color/page_background"
+        android:gravity="center"
+        android:text="@string/amend_stock_title"
+        android:textAlignment="gravity"
+        android:textAllCaps="true"
+        android:textColor="@color/page_title"
+        android:textSize="32sp" />
+
+    <EditText
+        android:id="@+id/amend_item_name_entered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@color/edit_text_colour"
+        android:hint="@string/name_hint"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/amend_item_size_entered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@color/edit_text_colour"
+        android:hint="@string/size_hint"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/amend_item_price_entered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@color/edit_text_colour"
+        android:hint="@string/price_hint"
+        android:imeOptions="actionDone"
+        android:inputType="numberDecimal"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/amend_item_quantity_entered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@color/edit_text_colour"
+        android:hint="@string/quantity_hint"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:padding="12dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/amend_stock_button"
+        android:id="@+id/amend_stock_page_button"/>
+
+</LinearLayout>
