@@ -10,7 +10,7 @@ public class DetailIntermediary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getIntent().getExtras();
-        int id = bundle.getInt("id");
+        int id = bundle.getInt("id") + 1;
         String idString = Integer.toString(id);
 
         BackgroundTask backgroundTask = new BackgroundTask(DetailIntermediary.this);

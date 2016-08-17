@@ -143,24 +143,25 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
         private Bitmap setReducedImageSize(){
-        int imageViewWidth = itemPhoto.getWidth();
-        int imageViewHeight = itemPhoto.getHeight();
+            itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
+//        int imageViewWidth = itemPhoto.getWidth();
+//        int imageViewHeight = itemPhoto.getHeight();
 
         //set up the bitmap options
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         //set the image to get the information
-        bmOptions.inJustDecodeBounds = true;
-        //open the image
-        BitmapFactory.decodeFile(photoLocation, bmOptions);
+//        bmOptions.inJustDecodeBounds = true;
+//        //open the image
+//        BitmapFactory.decodeFile(photoLocation, bmOptions);
         //get the width and height
-        int pictureWidth = bmOptions.outWidth;
-        int pictureHeight = bmOptions.outHeight;
+//        int pictureWidth = bmOptions.outWidth;
+//        int pictureHeight = bmOptions.outHeight;
 
         //scale the picture to the image view
-        bmOptions.inSampleSize = Math.min(pictureWidth/imageViewWidth, pictureHeight/imageViewHeight);
+//        bmOptions.inSampleSize = Math.min(pictureWidth/imageViewWidth, pictureHeight/imageViewHeight);
 
         //set the image to actually show
-        bmOptions.inJustDecodeBounds = false;
+//        bmOptions.inJustDecodeBounds = false;
 
         //set the smaller image to the image view
         return BitmapFactory.decodeFile(photoLocation, bmOptions);
