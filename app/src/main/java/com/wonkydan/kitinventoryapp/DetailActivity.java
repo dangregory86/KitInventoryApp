@@ -24,12 +24,14 @@ public class DetailActivity extends AppCompatActivity {
 
     ImageView itemPhoto;
     TextView nameView, sizeView, quantityView, priceView, selectedView;
-    Button minusButton, plusButton, sellButton, deleteButton;
+    Button minusButton, plusButton, sellButton, deleteButton, orderMoreButton;
     String name, size, quantity, price, photoLocation;
     int qtySelected = 0, qtyAvailable;
     Context context = this;
     ProductDatabase productDatabase;
 
+    //// TODO: 16/08/2016 get the order more button to open email with stock details ready to send to supplier
+    //// TODO: 16/08/2016 get the sell button to amend stock or order more if the stock becomes zero
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +144,8 @@ public class DetailActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //// TODO: 16/08/2016 get the imageview size to load correctly
         private Bitmap setReducedImageSize(){
             itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
 //        int imageViewWidth = itemPhoto.getWidth();
@@ -193,4 +197,5 @@ public class DetailActivity extends AppCompatActivity {
         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         itemPhoto.setImageBitmap(rotatedBitmap);
     }
+
 }

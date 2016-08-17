@@ -36,4 +36,5 @@
     <string name="qty_title">Qty</string>
     <string name="price_title">Price</string>
     <string name="picture_of_item">Picture of item</string>
+    <string name="order_more_button">Order more</string>
 </resources>

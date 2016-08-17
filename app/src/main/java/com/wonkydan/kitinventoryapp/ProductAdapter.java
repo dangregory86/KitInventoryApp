@@ -1,6 +1,8 @@
 package com.wonkydan.kitinventoryapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by danth on 10/08/2016.
+ * Created by Dan Gregory on 10/08/2016.
  */
 public class ProductAdapter extends ArrayAdapter {
 
@@ -38,10 +40,11 @@ public class ProductAdapter extends ArrayAdapter {
         return list.get(position);
     }
 
+    //// TODO: 16/08/2016 make a delete item button on each listview item 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        ProductHolder productHolder = null;
+        ProductHolder productHolder;
         if(row == null){
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = layoutInflater.inflate(R.layout.list_item, parent, false);
@@ -59,6 +62,23 @@ public class ProductAdapter extends ArrayAdapter {
         productHolder.stockName.setText(product.getName());
         productHolder.stockPrice.setText(product.getPrice());
         productHolder.stockQty.setText(product.getQty());
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                product = (Product) getItem(position);
+                Intent intent = new Intent(getContext(), DetailActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("name", product.getName());
+                bundle.putString("size", product.getSize());
+                bundle.putString("price", product.getPrice());
+                bundle.putString("qty", product.getQty());
+                bundle.putString("photo", product.getPhoto());
+
+                intent.putExtras(bundle);
+                getContext().startActivity(intent);
+            }
+        });
 
         return row;
     }

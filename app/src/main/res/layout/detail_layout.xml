@@ -102,10 +102,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/delete_all_button"
-            android:id="@+id/deleteAllButton"
+            android:text="@string/order_more_button"
+            android:id="@+id/orderMore"
             android:textSize="24sp"
             />
 </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="@string/delete_all_button"
+        android:id="@+id/deleteAllButton"
+        android:textSize="24sp" />
 
     </LinearLayout>

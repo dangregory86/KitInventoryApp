@@ -5,6 +5,7 @@
     android:background="@color/list_item_background"
     android:padding="2dp">
 
+    <!-- todo add a button to sell an item-->
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
