@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -60,10 +61,6 @@ public class DetailActivity extends AppCompatActivity {
         quantityView.setText(quantity);
         priceView.setText(price);
 
-        //get the image view
-        itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
-        rotateImage(setReducedImageSize());
-
         //adjust the selected quantity view
         minusButton = (Button) findViewById(R.id.minusButton);
         minusButton.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +69,9 @@ public class DetailActivity extends AppCompatActivity {
                 if(qtySelected > 0){
                     qtySelected -= 1;
                     selectedView.setText(Integer.toString(qtySelected));
+                    //get the image view
+                    itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
+                    rotateImage(setReducedImageSize());
                 }
             }
         });
@@ -84,6 +84,29 @@ public class DetailActivity extends AppCompatActivity {
                     qtySelected ++;
                     selectedView.setText(Integer.toString(qtySelected));
                 }
+            }
+        });
+
+        //set up the order more button
+        orderMoreButton = (Button) findViewById(R.id.orderMore);
+        orderMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //subject string
+                String stockRequired = "More " + name + " in size " + size + " required";
+
+                //main body string
+                String emailMainBody = "Dear supplier,\n" +
+                        "I would like to order 10 more " + name + " in size " + size + ".\n" +
+                        "For delivery ASAP\n" +
+                        "Kind regards";
+
+                //supplier email address
+                String[] emailAddress = new String[]{"Supplier@morestuff.com"};
+
+                //send the email
+                orderMoreStock(stockRequired, emailMainBody, emailAddress);
             }
         });
 
@@ -103,6 +126,10 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
+        //get the image view
+//        itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
+//        rotateImage(setReducedImageSize());
+
 
     }
     @Override
@@ -148,24 +175,24 @@ public class DetailActivity extends AppCompatActivity {
     //// TODO: 16/08/2016 get the imageview size to load correctly
         private Bitmap setReducedImageSize(){
             itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
-//        int imageViewWidth = itemPhoto.getWidth();
-//        int imageViewHeight = itemPhoto.getHeight();
+            int imageViewWidth = itemPhoto.getWidth();
+            int imageViewHeight = itemPhoto.getHeight();
 
         //set up the bitmap options
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         //set the image to get the information
-//        bmOptions.inJustDecodeBounds = true;
+            bmOptions.inJustDecodeBounds = true;
 //        //open the image
-//        BitmapFactory.decodeFile(photoLocation, bmOptions);
+            BitmapFactory.decodeFile(photoLocation, bmOptions);
         //get the width and height
-//        int pictureWidth = bmOptions.outWidth;
-//        int pictureHeight = bmOptions.outHeight;
+            int pictureWidth = bmOptions.outWidth;
+            int pictureHeight = bmOptions.outHeight;
 
         //scale the picture to the image view
-//        bmOptions.inSampleSize = Math.min(pictureWidth/imageViewWidth, pictureHeight/imageViewHeight);
+            bmOptions.inSampleSize = Math.min(pictureWidth / imageViewWidth, pictureHeight / imageViewHeight);
 
         //set the image to actually show
-//        bmOptions.inJustDecodeBounds = false;
+            bmOptions.inJustDecodeBounds = false;
 
         //set the smaller image to the image view
         return BitmapFactory.decodeFile(photoLocation, bmOptions);
@@ -196,6 +223,17 @@ public class DetailActivity extends AppCompatActivity {
         }
         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         itemPhoto.setImageBitmap(rotatedBitmap);
+    }
+
+    public void orderMoreStock(String emailDescription, String emailBody, String[] supplier) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, supplier);
+        intent.putExtra(Intent.EXTRA_SUBJECT, emailDescription);
+        intent.putExtra(Intent.EXTRA_TEXT, emailBody);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 }
