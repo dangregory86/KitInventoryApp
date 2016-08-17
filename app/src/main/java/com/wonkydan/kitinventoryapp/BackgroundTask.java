@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 /**
  * Created by Dan Gregory on 10/08/2016.
  */
@@ -40,6 +42,7 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
         //adding a new product to the database
         String method = params[0];
         ProductDatabase productDatabase = new ProductDatabase(context);
+
         if(method.equals("add_info")){
             name = params[1];
             size = params[2];
@@ -97,7 +100,7 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
                 productDatabase.updateStockInfo(sqLiteDatabase, params[1], params[2], cursor.getString(2), params[4], cursor.getString(3), params[6]);
             }
             return "Database updated";
-        }else if(method == "detail_info"){
+        }else if(Objects.equals(method, "detail_info")){
             SQLiteDatabase sqLiteDatabase = productDatabase.getReadableDatabase();
             String name = "", size = "", qty = "", price = "", photo = "";
 
@@ -105,17 +108,13 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
             cursor.moveToFirst();
             int id = Integer.parseInt(params[1]);
 
-            boolean stockExists = false;
             do{
                 if(id == cursor.getInt(0)){
-                    stockExists = true;
-                    if(stockExists){
-                        name = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.NAME)) + "-";
-                        size = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.SIZE)) + "-";
-                        qty = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.QUANTITY)) + "-";
-                        price = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.PRICE)) + "-";
-                        photo = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.PHOTO));
-                    }
+                    name = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.NAME)) + "-";
+                    size = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.SIZE)) + "-";
+                    qty = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.QUANTITY)) + "-";
+                    price = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.PRICE)) + "-";
+                    photo = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.PHOTO));
                 }
             }while(cursor.moveToNext());
              return name + size + qty + price + photo;
@@ -133,53 +132,59 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
     @Override
     protected void onPostExecute(String result) {
 
-        if(result.equals("get_info")){
-            listView.setEmptyView(empty);
-            listView.setAdapter(productAdapter);
+        switch (result) {
+            case "get_info":
+                listView.setEmptyView(empty);
+                listView.setAdapter(productAdapter);
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                    Intent intent = new Intent(context, DetailIntermediary.class);
+                        Intent intent = new Intent(context, DetailIntermediary.class);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("id", position);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("id", position);
 
-                    intent.putExtras(bundle);
+                        intent.putExtras(bundle);
 
-                    context.startActivity(intent);
+                        context.startActivity(intent);
 
-                }
-            });
-        }else if(result.equals("One row inserted")){
-            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-        }else if(result.equals("Database updated")){
-            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-        }else if(result.equals("failed...")){
-            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-        }else{
-            Intent intent = new Intent(context, DetailActivity.class);
+                    }
+                });
+                break;
+            case "One row inserted":
+                Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+                break;
+            case "Database updated":
+                Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+                break;
+            case "failed...":
+                Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+                break;
+            default:
+                Intent intent = new Intent(context, DetailActivity.class);
 
-            //split down the result string
-            String[] parts = result.split("-");
-            String name = parts[0];
-            String size = parts[1];
-            String qty = parts[2];
-            String price = parts[3];
-            String photo = parts[4];
+                //split down the result string
+                String[] parts = result.split("-");
+                String name = parts[0];
+                String size = parts[1];
+                String qty = parts[2];
+                String price = parts[3];
+                String photo = parts[4];
 
-            //add the item details to the intent
-            Bundle bundle = new Bundle();
-            bundle.putString("name", name);
-            bundle.putString("size", size);
-            bundle.putString("qty", qty);
-            bundle.putString("price", price);
-            bundle.putString("photo", photo);
+                //add the item details to the intent
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putString("size", size);
+                bundle.putString("qty", qty);
+                bundle.putString("price", price);
+                bundle.putString("photo", photo);
 
-            intent.putExtras(bundle);
+                intent.putExtras(bundle);
 
-            context.startActivity(intent);
+                context.startActivity(intent);
+                break;
         }
     }
 }

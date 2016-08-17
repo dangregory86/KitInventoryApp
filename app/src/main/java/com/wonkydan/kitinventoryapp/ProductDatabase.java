@@ -44,7 +44,7 @@ public class ProductDatabase extends SQLiteOpenHelper {
     }
     public Cursor getInformation(SQLiteDatabase sqLiteDatabase){
 
-        String[] columnNames = {ProductContract.Table1.NAME, ProductContract.Table1.SIZE, ProductContract.Table1.QUANTITY, ProductContract.Table1.PRICE};
+        String[] columnNames = {ProductContract.Table1.NAME, ProductContract.Table1.SIZE, ProductContract.Table1.QUANTITY, ProductContract.Table1.PRICE, ProductContract.Table1.PHOTO};
 
         return sqLiteDatabase.query(ProductContract.Table1.TABLE_TITLE, columnNames,
                 null, null, null, null, null);
@@ -65,7 +65,7 @@ public class ProductDatabase extends SQLiteOpenHelper {
 
     public Cursor getDetailInformation(SQLiteDatabase sqLiteDatabase, String id){
 
-        String[] columnNames = {ProductContract.Table1._ID, ProductContract.Table1.NAME, ProductContract.Table1.SIZE, ProductContract.Table1.QUANTITY, ProductContract.Table1.PRICE};
+        String[] columnNames = {ProductContract.Table1._ID, ProductContract.Table1.NAME, ProductContract.Table1.SIZE, ProductContract.Table1.QUANTITY, ProductContract.Table1.PRICE, ProductContract.Table1.PHOTO};
         String selection = ProductContract.Table1._ID + " LIKE ?";
         String[] args = {id};
 
