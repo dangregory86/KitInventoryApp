@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="4dp"
-    tools:context="com.wonkydan.kitinventoryapp.DetailActivity">
+    tools:context="com.wonkydan.kitinventoryapp.DetailActivity"
+    android:isScrollContainer="true">
 
     <ImageView
         android:id="@+id/detail_item_picture"
