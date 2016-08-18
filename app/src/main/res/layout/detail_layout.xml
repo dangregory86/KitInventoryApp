@@ -3,52 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wonkydan.kitinventoryapp.DetailActivity"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:padding="4dp"
+    tools:context="com.wonkydan.kitinventoryapp.DetailActivity">
 
     <ImageView
+        android:id="@+id/detail_item_picture"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
         android:layout_weight="1"
-        android:scaleType="fitCenter"
-        android:src="@drawable/test"
-        android:id="@+id/detail_item_picture"
         android:contentDescription="@string/picture_of_item"
-        />
+        android:scaleType="fitCenter"
+        android:src="@drawable/test" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:text="@string/detail_name"
         android:id="@+id/detail_name"
-        android:gravity="center"
-        android:textSize="18sp"
-        />
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:text="@string/detail_size"
+        android:gravity="center"
+        android:text="@string/detail_name"
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/detail_size"
-        android:gravity="center"
-        android:textSize="18sp"
-        />
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:text="@string/detail_qty"
+        android:gravity="center"
+        android:text="@string/detail_size"
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/detail_quantity"
-        android:gravity="center"
-        android:textSize="18sp"
-        />
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:text="@string/detail_price"
-        android:id="@+id/detail_price"
         android:gravity="center"
-        android:textSize="18sp"
-        />
+        android:text="@string/detail_qty"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/detail_price"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:text="@string/detail_price"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,72 +56,68 @@
         android:padding="2dp">
 
         <Button
+            android:id="@+id/minusButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/minus_button"
-            android:id="@+id/minusButton"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/quantitySelected"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/quantity_edit"
             android:textAlignment="gravity"
-            android:gravity="center"
-            android:id="@+id/quantitySelected"
             android:textSize="18sp" />
 
         <Button
+            android:id="@+id/plusButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/plus_button"
-            android:id="@+id/plusButton"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal"
-        android:padding="2dp"
-        >
+        android:padding="2dp">
 
         <Button
+            android:id="@+id/sellButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/sell_button"
-            android:id="@+id/sellButton"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
 
         <Button
+            android:id="@+id/receiveMore"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/receive_more_button"
-            android:id="@+id/receiveMore"
-            android:textSize="18sp"
-            />
-</LinearLayout>
+            android:textSize="18sp" />
+    </LinearLayout>
 
     <Button
+        android:id="@+id/orderMore"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:text="@string/order_more_button"
-        android:id="@+id/orderMore"
         android:textSize="18sp" />
 
 
     <Button
+        android:id="@+id/deleteAllButton"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:text="@string/delete_all_button"
-        android:id="@+id/deleteAllButton"
         android:textSize="18sp" />
 
-    </LinearLayout>
+</LinearLayout>

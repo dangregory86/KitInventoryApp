@@ -11,6 +11,7 @@ import android.widget.Button;
 public class ViewStockActivity extends AppCompatActivity {
 
     Button refresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,17 +53,12 @@ public class ViewStockActivity extends AppCompatActivity {
 
             startActivity(intent);
             return true;
-        }else if(id == R.id.action_add_stock){
+        } else if (id == R.id.action_add_stock) {
             Intent intent = new Intent(ViewStockActivity.this, AddStockActivity.class);
 
             startActivity(intent);
             return true;
-        }else if(id == R.id.action_view_stock){
-            return true;
-        }else if(id == R.id.action_amend_stock){
-            Intent intent = new Intent(ViewStockActivity.this, AmendStockActivity.class);
-
-            startActivity(intent);
+        } else if (id == R.id.action_view_stock) {
             return true;
         }
 

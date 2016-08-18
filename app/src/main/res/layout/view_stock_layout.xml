@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wonkydan.kitinventoryapp.ViewStockActivity"
+    android:background="@color/page_background"
     android:orientation="vertical"
-    android:background="@color/page_background">
+    tools:context="com.wonkydan.kitinventoryapp.ViewStockActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -15,63 +15,67 @@
         android:textAlignment="gravity"
         android:textAllCaps="true"
         android:textColor="@color/page_title"
-        android:textSize="32sp"/>
+        android:textSize="32sp" />
+
     <Button
+        android:id="@+id/refresh_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/refresh"
-        android:id="@+id/refresh_button"
         android:layout_marginBottom="12dp"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="8dp"
+        android:text="@string/refresh" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="4dp">
+
         <TextView
+            android:id="@+id/item_description"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/description_title"
-            android:id="@+id/item_description"
-            android:textColor="@color/page_title"
-            android:gravity="center"/>
+            android:textColor="@color/page_title" />
+
         <TextView
-            android:layout_width="88dp"
-            android:layout_height="match_parent"
-            android:text="@string/qty_title"
             android:id="@+id/item_qty"
-            android:textColor="@color/page_title"
-            android:gravity="center"/>
-        <TextView
             android:layout_width="88dp"
             android:layout_height="match_parent"
-            android:text="@string/price_title"
+            android:gravity="center"
+            android:text="@string/qty_title"
+            android:textColor="@color/page_title" />
+
+        <TextView
             android:id="@+id/item_price"
-            android:textColor="@color/page_title"
-            android:gravity="center"/>
+            android:layout_width="88dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/price_title"
+            android:textColor="@color/page_title" />
     </LinearLayout>
 
 
     <ListView
+        android:id="@+id/current_stock_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/current_stock_list"
         android:divider="@color/page_title"
-        android:dividerHeight="2dp"
-        />
+        android:dividerHeight="2dp" />
 
     <TextView
+        android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="88dp"
+        android:paddingEnd="6dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingStart="6dp"
         android:text="@string/no_items_in_stock"
-        android:id="@android:id/empty"
         android:textAlignment="gravity"
         android:textAllCaps="false"
-        android:paddingStart="6dp"
-        android:paddingLeft="6dp"
-        android:paddingEnd="6dp"
-        android:paddingRight="6dp"
-        android:textColor="@color/page_title"/>
+        android:textColor="@color/page_title" />
 
 </LinearLayout>

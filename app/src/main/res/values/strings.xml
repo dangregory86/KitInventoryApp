@@ -38,4 +38,5 @@
     <string name="picture_of_item">Picture of item</string>
     <string name="order_more_button">Order more</string>
     <string name="receive_more_button">receive stock</string>
+    <string name="sell_one">Sell 1</string>
 </resources>

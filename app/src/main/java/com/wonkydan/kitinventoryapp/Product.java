@@ -19,10 +19,6 @@ public class Product {
         return photo;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
     public String getName() {
         return name;
     }
@@ -35,23 +31,12 @@ public class Product {
         return size;
     }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
-
     public String getQty() {
         return qty;
-    }
-
-    public void setQty(String qty) {
-        this.qty = qty;
     }
 
     public String getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
 }

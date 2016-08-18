@@ -73,13 +73,14 @@ public class AddStockActivity extends AppCompatActivity {
         addPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ContextCompat.checkSelfPermission(AddStockActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                if (ContextCompat.checkSelfPermission(AddStockActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     takePhotoMethod();
-                }else{
+                } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                        if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                             Toast.makeText(AddStockActivity.this, "Permission needed to write to file", Toast.LENGTH_SHORT).show();
-                        }requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CHECK);
+                        }
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CHECK);
                     }
                 }
             }
@@ -113,11 +114,6 @@ public class AddStockActivity extends AppCompatActivity {
 
             startActivity(intent);
             return true;
-        } else if (id == R.id.action_amend_stock) {
-            Intent intent = new Intent(AddStockActivity.this, AmendStockActivity.class);
-
-            startActivity(intent);
-            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -125,18 +121,18 @@ public class AddStockActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == PERMISSION_CHECK){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == PERMISSION_CHECK) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 takePhotoMethod();
-            }else {
+            } else {
                 Toast.makeText(this, "Permission is not granted, can't save images", Toast.LENGTH_LONG).show();
             }
-        }else{
+        } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
-    public void takePhotoMethod(){
+    public void takePhotoMethod() {
         Intent callCamera = new Intent();
         callCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -150,21 +146,22 @@ public class AddStockActivity extends AppCompatActivity {
         callCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoCaptured));
         startActivityForResult(callCamera, CAMERA_INT);
     }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
-        if(requestCode == CAMERA_INT && resultCode == RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == CAMERA_INT && resultCode == RESULT_OK) {
             Toast.makeText(AddStockActivity.this, "Photo taken", Toast.LENGTH_SHORT).show();
 
         }
 
     }
 
-    File createImageFile()throws IOException{
+    File createImageFile() throws IOException {
 
         //create a date stamp to make the photo name unique
         String timeStamp = SimpleDateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG).toString();
 
-        String imageFileName = "IMAGE_" + timeStamp +"_";
+        String imageFileName = "IMAGE_" + timeStamp + "_";
         File storageLocation = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
         File image = File.createTempFile(imageFileName, ".jpg", storageLocation);

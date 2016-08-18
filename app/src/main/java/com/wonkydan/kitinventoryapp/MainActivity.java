@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
 
     Button addItem;
     Button viewStock;
-    Button amendStock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 Intent intent = new Intent(MainActivity.this, AddStockActivity.class);
 
                 startActivity(intent);
@@ -57,17 +54,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //an on click listener for the amend stock button
-        amendStock = (Button) findViewById(R.id.amend_stock_main);
-        amendStock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AmendStockActivity.class);
-
-                startActivity(intent);
-            }
-        });
-
     }
 
     @Override
@@ -87,17 +73,13 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_main_page) {
             return true;
-        }else if(id == R.id.action_add_stock){
+        } else if (id == R.id.action_add_stock) {
             Intent intent = new Intent(MainActivity.this, AddStockActivity.class);
 
             startActivity(intent);
             return true;
-        }else if(id == R.id.action_view_stock){
+        } else if (id == R.id.action_view_stock) {
             Intent intent = new Intent(MainActivity.this, ViewStockActivity.class);
-
-            startActivity(intent);
-            return true;
-        }else if(id == R.id.action_amend_stock){Intent intent = new Intent(MainActivity.this, AmendStockActivity.class);
 
             startActivity(intent);
             return true;

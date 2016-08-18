@@ -67,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(qtySelected > 0){
+                if (qtySelected > 0) {
                     qtySelected -= 1;
                     selectedView.setText(Integer.toString(qtySelected));
                 }
@@ -79,7 +79,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (qtySelected < qtyAvailable + 10) {
-                    qtySelected ++;
+                    qtySelected++;
                     selectedView.setText(Integer.toString(qtySelected));
                 }
             }
@@ -179,6 +179,7 @@ public class DetailActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -199,18 +200,13 @@ public class DetailActivity extends AppCompatActivity {
 
             startActivity(intent);
             return true;
-        }else if(id == R.id.action_add_stock){
+        } else if (id == R.id.action_add_stock) {
             Intent intent = new Intent(DetailActivity.this, AddStockActivity.class);
 
             startActivity(intent);
             return true;
-        }else if(id == R.id.action_view_stock){
+        } else if (id == R.id.action_view_stock) {
             Intent intent = new Intent(DetailActivity.this, ViewStockActivity.class);
-
-            startActivity(intent);
-            return true;
-        }else if(id == R.id.action_amend_stock){
-            Intent intent = new Intent(DetailActivity.this, AmendStockActivity.class);
 
             startActivity(intent);
             return true;
@@ -226,32 +222,32 @@ public class DetailActivity extends AppCompatActivity {
         rotateImage(setReducedImageSize());
     }
 
-        private Bitmap setReducedImageSize(){
+    private Bitmap setReducedImageSize() {
 
         //set up the bitmap options
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
 
         //set the image to get the information
-            bmOptions.inJustDecodeBounds = true;
+        bmOptions.inJustDecodeBounds = true;
 
-            //open the image
-            BitmapFactory.decodeFile(photoLocation, bmOptions);
+        //open the image
+        BitmapFactory.decodeFile(photoLocation, bmOptions);
 
         //get the width and height
-            int pictureWidth = bmOptions.outWidth;
-            int pictureHeight = bmOptions.outHeight;
+        int pictureWidth = bmOptions.outWidth;
+        int pictureHeight = bmOptions.outHeight;
 
         //scale the picture to the image view
-            bmOptions.inSampleSize = Math.min(pictureWidth / photoWidth, pictureHeight / photoHeight);
+        bmOptions.inSampleSize = Math.min(pictureWidth / photoWidth, pictureHeight / photoHeight);
 
         //set the image to actually show
-            bmOptions.inJustDecodeBounds = false;
+        bmOptions.inJustDecodeBounds = false;
 
         //set the smaller image to the image view
         return BitmapFactory.decodeFile(photoLocation, bmOptions);
     }
 
-    private void rotateImage(Bitmap bitmap){
+    private void rotateImage(Bitmap bitmap) {
         ExifInterface exifInterface = null;
 
         //get the exif data for the photo
@@ -264,7 +260,7 @@ public class DetailActivity extends AppCompatActivity {
         int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
         Matrix matrix = new Matrix();
 
-        switch(orientation){
+        switch (orientation) {
             case ExifInterface.ORIENTATION_ROTATE_90:
                 matrix.setRotate(90);
                 break;

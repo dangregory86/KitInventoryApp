@@ -17,9 +17,4 @@
         android:orderInCategory="100"
         android:title="@string/view_stock_button"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_amend_stock"
-        android:orderInCategory="100"
-        android:title="@string/amend_stock_button"
-        app:showAsAction="never" />
 </menu>

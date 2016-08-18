@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Created by danth on 10/08/2016.
+ * Created by Dan Gregory on 10/08/2016.
  */
 public class ProductDatabase extends SQLiteOpenHelper {
     public ProductDatabase(Context context) {
@@ -30,7 +30,7 @@ public class ProductDatabase extends SQLiteOpenHelper {
 
     }
 
-    public void addInfo(SQLiteDatabase sqLiteDatabase, String name, String size, String qty, String price, String photo){
+    public void addInfo(SQLiteDatabase sqLiteDatabase, String name, String size, String qty, String price, String photo) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ProductContract.Table1.NAME, name);
         contentValues.put(ProductContract.Table1.SIZE, size);
@@ -42,7 +42,8 @@ public class ProductDatabase extends SQLiteOpenHelper {
 
         Log.d("DB:", "One row inserted");
     }
-    public Cursor getInformation(SQLiteDatabase sqLiteDatabase){
+
+    public Cursor getInformation(SQLiteDatabase sqLiteDatabase) {
 
         String[] columnNames = {ProductContract.Table1.NAME, ProductContract.Table1.SIZE, ProductContract.Table1.QUANTITY, ProductContract.Table1.PRICE, ProductContract.Table1.PHOTO};
 
@@ -63,7 +64,7 @@ public class ProductDatabase extends SQLiteOpenHelper {
 
     }
 
-    public void deleteItem(SQLiteDatabase sqLiteDatabase, String name, String size, String qty, String price){
+    public void deleteItem(SQLiteDatabase sqLiteDatabase, String name, String size, String qty, String price) {
         String selection = ProductContract.Table1.NAME + " LIKE ? AND " + ProductContract.Table1.SIZE + " LIKE ? AND "
                 + ProductContract.Table1.PRICE + " LIKE ? AND " + ProductContract.Table1.QUANTITY + " LIKE ?";
 

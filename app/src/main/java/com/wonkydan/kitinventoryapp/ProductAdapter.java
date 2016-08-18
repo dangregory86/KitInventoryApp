@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,8 @@ public class ProductAdapter extends ArrayAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;
         ProductHolder productHolder;
-        if(row == null){
+        Button button;
+        if (row == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = layoutInflater.inflate(R.layout.list_item, parent, false);
             productHolder = new ProductHolder();
@@ -55,7 +58,7 @@ public class ProductAdapter extends ArrayAdapter {
             productHolder.stockQty = (TextView) row.findViewById(R.id.item_qty);
 
             row.setTag(productHolder);
-        }else{
+        } else {
             productHolder = (ProductHolder) row.getTag();
         }
         product = (Product) getItem(position);
@@ -80,9 +83,36 @@ public class ProductAdapter extends ArrayAdapter {
             }
         });
 
+        //list view sell button method
+        button = (Button) row.findViewById(R.id.list_sell_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                product = (Product) getItem(position);
+                //get the relevant strings for updating the data
+                String name = product.getName();
+                String size = product.getSize();
+                String price = product.getPrice();
+                String qty = product.getQty();
+
+                //set the new qty after selling an item
+                int newQtyNum = Integer.parseInt(qty) - 1;
+                String newQtyString = Integer.toString(newQtyNum);
+
+                //update the database
+                BackgroundTask backgroundTask = new BackgroundTask(getContext());
+                backgroundTask.execute("update_info", name, size, price, qty, newQtyString);
+
+                //set a toast to refresh the page
+                Toast.makeText(getContext(), "Sold 1, refresh to show", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         return row;
     }
-    static class ProductHolder{
+
+    static class ProductHolder {
 
         TextView stockName, stockQty, stockPrice;
     }

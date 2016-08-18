@@ -21,7 +21,7 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
     ListView listView;
     View empty;
 
-    BackgroundTask(Context context){
+    BackgroundTask(Context context) {
         this.context = context;
         activity = (Activity) context;
     }
@@ -47,7 +47,6 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
                 photo = params[5];
                 SQLiteDatabase sqLiteDatabase = productDatabase.getWritableDatabase();
 
-
                 productDatabase.addInfo(sqLiteDatabase, name, size, qty, price, photo);
 
                 return "One row inserted";
@@ -58,7 +57,6 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
 
                 listView = (ListView) activity.findViewById(R.id.current_stock_list);
                 empty = activity.findViewById(android.R.id.empty);
-
 
                 Cursor cursor = productDatabase.getInformation(sqLiteDatabase);
                 productAdapter = new ProductAdapter(context, R.layout.add_stock_layout);
@@ -77,7 +75,6 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
                 return "get_info";
             }
             //updating price or quantity of an item
-            //// TODO: 16/08/2016 fix amend item so it updates the SQL correctly.
             case "update_info": {
 
                 SQLiteDatabase sqLiteDatabase = productDatabase.getWritableDatabase();
@@ -107,7 +104,6 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
                 Toast.makeText(context, result, Toast.LENGTH_LONG).show();
                 break;
             case "Database updated":
-                Toast.makeText(context, result, Toast.LENGTH_LONG).show();
                 break;
             case "failed...":
                 Toast.makeText(context, result, Toast.LENGTH_LONG).show();
