@@ -1,6 +1,7 @@
 package com.wonkydan.kitinventoryapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -9,10 +10,12 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,14 +28,12 @@ public class DetailActivity extends AppCompatActivity {
 
     ImageView itemPhoto;
     TextView nameView, sizeView, quantityView, priceView, selectedView;
-    Button minusButton, plusButton, sellButton, deleteButton, orderMoreButton;
-    String name, size, quantity, price, photoLocation;
-    int qtySelected = 0, qtyAvailable;
+    Button minusButton, plusButton, sellButton, deleteButton, orderMoreButton, receiveStock;
+    String name, size, quantity, price, photoLocation, newQtyString, qtyAvailableString;
+    int qtySelected = 0, qtyAvailable, photoHeight, photoWidth, newQty;
     Context context = this;
     ProductDatabase productDatabase;
 
-    //// TODO: 16/08/2016 get the order more button to open email with stock details ready to send to supplier
-    //// TODO: 16/08/2016 get the sell button to amend stock or order more if the stock becomes zero
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +70,6 @@ public class DetailActivity extends AppCompatActivity {
                 if(qtySelected > 0){
                     qtySelected -= 1;
                     selectedView.setText(Integer.toString(qtySelected));
-                    //get the image view
-                    itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
-                    rotateImage(setReducedImageSize());
                 }
             }
         });
@@ -80,7 +78,7 @@ public class DetailActivity extends AppCompatActivity {
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(qtySelected < qtyAvailable){
+                if (qtySelected < qtyAvailable + 10) {
                     qtySelected ++;
                     selectedView.setText(Integer.toString(qtySelected));
                 }
@@ -116,20 +114,69 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                productDatabase = new ProductDatabase(context);
-                SQLiteDatabase sqLiteDatabase = productDatabase.getWritableDatabase();
-                productDatabase.deleteItem(sqLiteDatabase, name, size, quantity, price);
+                deleteItemConfirmation();
 
-                Toast.makeText(getBaseContext(), "Item Removed", Toast.LENGTH_LONG).show();
-
-                finish();
 
             }
         });
         //get the image view
-//        itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
-//        rotateImage(setReducedImageSize());
+        itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
 
+        ViewTreeObserver vto = itemPhoto.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                itemPhoto.getViewTreeObserver().removeOnPreDrawListener(this);
+                photoHeight = itemPhoto.getMeasuredHeight();
+                photoWidth = itemPhoto.getMeasuredWidth();
+                rotateImage(setReducedImageSize());
+                return true;
+            }
+        });
+
+        //sell button to sell the selected number of stock
+        sellButton = (Button) findViewById(R.id.sellButton);
+        sellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (qtySelected > 0 && qtySelected <= qtyAvailable) {
+                    newQty = qtyAvailable - qtySelected;
+                    newQtyString = Integer.toString(newQty);
+                    qtyAvailableString = Integer.toString(qtyAvailable);
+                    BackgroundTask bTask = new BackgroundTask(context);
+
+                    //toast to say how many have been sold
+                    Toast.makeText(DetailActivity.this, qtySelected + " sold", Toast.LENGTH_SHORT).show();
+                    //adjust quantity shown in detail view
+                    quantityView.setText(newQtyString);
+                    //update database
+                    bTask.execute("update_info", name, size, price, qtyAvailableString, newQtyString);
+
+                } else {
+                    Toast.makeText(DetailActivity.this, "We don't have that many in stock, please select less and try again", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        //the button to receive stock
+        receiveStock = (Button) findViewById(R.id.receiveMore);
+        receiveStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newQty = qtyAvailable + qtySelected;
+                newQtyString = Integer.toString(newQty);
+                qtyAvailableString = Integer.toString(qtyAvailable);
+                BackgroundTask bTask = new BackgroundTask(context);
+                //toast to say how many have been sold
+                Toast.makeText(DetailActivity.this, qtySelected + " received", Toast.LENGTH_SHORT).show();
+
+                //adjust the qty shown in detail view
+                quantityView.setText(newQtyString);
+                //update database
+                bTask.execute("update_info", name, size, price, qtyAvailableString, newQtyString);
+                qtyAvailable = newQty;
+
+            }
+        });
 
     }
     @Override
@@ -172,31 +219,36 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //// TODO: 16/08/2016 get the imageview size to load correctly
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        //get the image view
+        rotateImage(setReducedImageSize());
+    }
+
         private Bitmap setReducedImageSize(){
-            itemPhoto = (ImageView) findViewById(R.id.detail_item_picture);
-            int imageViewWidth = itemPhoto.getWidth();
-            int imageViewHeight = itemPhoto.getHeight();
 
         //set up the bitmap options
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+
         //set the image to get the information
             bmOptions.inJustDecodeBounds = true;
-//        //open the image
+
+            //open the image
             BitmapFactory.decodeFile(photoLocation, bmOptions);
+
         //get the width and height
             int pictureWidth = bmOptions.outWidth;
             int pictureHeight = bmOptions.outHeight;
 
         //scale the picture to the image view
-            bmOptions.inSampleSize = Math.min(pictureWidth / imageViewWidth, pictureHeight / imageViewHeight);
+            bmOptions.inSampleSize = Math.min(pictureWidth / photoWidth, pictureHeight / photoHeight);
 
         //set the image to actually show
             bmOptions.inJustDecodeBounds = false;
 
         //set the smaller image to the image view
         return BitmapFactory.decodeFile(photoLocation, bmOptions);
-//        mPicture.setImageBitmap(smallerPhoto);
     }
 
     private void rotateImage(Bitmap bitmap){
@@ -225,6 +277,7 @@ public class DetailActivity extends AppCompatActivity {
         itemPhoto.setImageBitmap(rotatedBitmap);
     }
 
+    //method to start an email intent to order more stock from the supplier
     public void orderMoreStock(String emailDescription, String emailBody, String[] supplier) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
@@ -234,6 +287,32 @@ public class DetailActivity extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+    public void deleteItemConfirmation() {
+        new AlertDialog.Builder(context)
+                .setTitle("Delete entry")
+                .setMessage("Are you sure you want to delete this entry?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        productDatabase = new ProductDatabase(context);
+                        SQLiteDatabase sqLiteDatabase = productDatabase.getWritableDatabase();
+                        productDatabase.deleteItem(sqLiteDatabase, name, size, quantity, price);
+
+                        Toast.makeText(getBaseContext(), "Item Removed", Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(DetailActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 }

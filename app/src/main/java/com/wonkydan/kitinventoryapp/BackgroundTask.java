@@ -38,64 +38,53 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
         String method = params[0];
         ProductDatabase productDatabase = new ProductDatabase(context);
 
-        if(method.equals("add_info")){
-            name = params[1];
-            size = params[2];
-            qty = params[3];
-            price = params[4];
-            photo = params[5];
-            SQLiteDatabase sqLiteDatabase = productDatabase.getWritableDatabase();
+        switch (method) {
+            case "add_info": {
+                name = params[1];
+                size = params[2];
+                qty = params[3];
+                price = params[4];
+                photo = params[5];
+                SQLiteDatabase sqLiteDatabase = productDatabase.getWritableDatabase();
 
 
-            productDatabase.addInfo(sqLiteDatabase, name, size, qty, price, photo);
+                productDatabase.addInfo(sqLiteDatabase, name, size, qty, price, photo);
 
-            return "One row inserted";
-        }
-        //filling the list view with available products
-        else if(method.equals("get_info")) {
-            SQLiteDatabase sqLiteDatabase = productDatabase.getReadableDatabase();
-
-            listView = (ListView) activity.findViewById(R.id.current_stock_list);
-            empty = activity.findViewById(android.R.id.empty);
-
-
-            Cursor cursor = productDatabase.getInformation(sqLiteDatabase);
-            productAdapter = new ProductAdapter(context, R.layout.add_stock_layout);
-
-            while (cursor.moveToNext()) {
-                name = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.NAME));
-                size = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.SIZE));
-                qty = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.QUANTITY));
-                price = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.PRICE));
-                photo = cursor.getString(cursor.getColumnIndexOrThrow(ProductContract.Table1.PHOTO));
-
-                Product product = new Product(name, size, qty, price, photo);
-                publishProgress(product);
+                return "One row inserted";
             }
+            //filling the list view with available products
+            case "get_info": {
+                SQLiteDatabase sqLiteDatabase = productDatabase.getReadableDatabase();
 
-            return "get_info";
-        }
-        //updating price or quantity of an item
-        //// TODO: 16/08/2016 fix ammend item so it updates the SQL correctly. 
-        else if(method.equals("update_info")){
-            SQLiteDatabase sqLiteDatabase = productDatabase.getReadableDatabase();
+                listView = (ListView) activity.findViewById(R.id.current_stock_list);
+                empty = activity.findViewById(android.R.id.empty);
 
-            //get a cursor and move to first
-            Cursor cursor = productDatabase.getInformation(sqLiteDatabase);
-            cursor.moveToFirst();
 
-            boolean stockExists = false;
-            do{
-                if(params[1].equals(cursor.getString(0)) && params[2].equals(cursor.getString(1))){
-                    stockExists = true;
+                Cursor cursor = productDatabase.getInformation(sqLiteDatabase);
+                productAdapter = new ProductAdapter(context, R.layout.add_stock_layout);
 
+                while (cursor.moveToNext()) {
+                    name = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.NAME));
+                    size = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.SIZE));
+                    qty = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.QUANTITY));
+                    price = cursor.getString(cursor.getColumnIndex(ProductContract.Table1.PRICE));
+                    photo = cursor.getString(cursor.getColumnIndexOrThrow(ProductContract.Table1.PHOTO));
+
+                    Product product = new Product(name, size, qty, price, photo);
+                    publishProgress(product);
                 }
-            }while (cursor.moveToNext());
-            if(stockExists){
-                sqLiteDatabase = productDatabase.getWritableDatabase();
-                productDatabase.updateStockInfo(sqLiteDatabase, params[1], params[2], cursor.getString(2), params[4], cursor.getString(3), params[6]);
+
+                return "get_info";
             }
-            return "Database updated";
+            //updating price or quantity of an item
+            //// TODO: 16/08/2016 fix amend item so it updates the SQL correctly.
+            case "update_info": {
+
+                SQLiteDatabase sqLiteDatabase = productDatabase.getWritableDatabase();
+                productDatabase.updateStockInfo(sqLiteDatabase, params[1], params[2], params[3], params[4], params[5]);
+
+                return "Database updated";
+            }
         }
         return "failed...";
     }
@@ -122,6 +111,8 @@ public class BackgroundTask extends AsyncTask<String, Product, String> {
                 break;
             case "failed...":
                 Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+                break;
+            default:
                 break;
 
         }

@@ -49,28 +49,18 @@ public class ProductDatabase extends SQLiteOpenHelper {
         return sqLiteDatabase.query(ProductContract.Table1.TABLE_TITLE, columnNames,
                 null, null, null, null, null);
     }
-    public void updateStockInfo(SQLiteDatabase sqLiteDatabase, String name, String size, String priceOld, String priceNew, String qtyOld, String qtyNew){
+
+    public void updateStockInfo(SQLiteDatabase sqLiteDatabase, String name, String size, String price, String qtyOld, String qtyNew) {
 
         String selection = ProductContract.Table1.NAME + " LIKE ? AND " + ProductContract.Table1.SIZE + " LIKE ? AND " + ProductContract.Table1.PRICE + " LIKE ? AND "
                 + ProductContract.Table1.QUANTITY + " LIKE ?";
-        String args[] = {name, size, priceOld, qtyOld};
+        String args[] = {name, size, price, qtyOld};
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(ProductContract.Table1.PRICE, priceNew);
         contentValues.put(ProductContract.Table1.QUANTITY, qtyNew);
 
         sqLiteDatabase.update(ProductContract.Table1.TABLE_TITLE, contentValues, selection, args);
 
-    }
-
-    public Cursor getDetailInformation(SQLiteDatabase sqLiteDatabase, String id){
-
-        String[] columnNames = {ProductContract.Table1._ID, ProductContract.Table1.NAME, ProductContract.Table1.SIZE, ProductContract.Table1.QUANTITY, ProductContract.Table1.PRICE, ProductContract.Table1.PHOTO};
-        String selection = ProductContract.Table1._ID + " LIKE ?";
-        String[] args = {id};
-
-        return sqLiteDatabase.query(ProductContract.Table1.TABLE_TITLE, columnNames,
-                null, null, null, null, null);
     }
 
     public void deleteItem(SQLiteDatabase sqLiteDatabase, String name, String size, String qty, String price){
